@@ -15,6 +15,10 @@ func main() {
 		panic(err)
 	}
 
+	if len(frequencies) == 0 {
+		return
+	}
+
 	var sum int
 	history := map[int]struct{}{0: struct{}{}}
 
