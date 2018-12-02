@@ -6,8 +6,10 @@ import (
 	"strings"
 )
 
+const inputFileName = "input.txt"
+
 func main() {
-	lines, err := parseFile("input.txt")
+	lines, err := parseFile(inputFileName)
 	if err != nil {
 		panic(err)
 	}
