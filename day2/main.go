@@ -17,17 +17,17 @@ func main() {
 	counts := make(map[int]int)
 
 	for _, line := range lines {
-		count := make(map[rune]int)
+		letterCounts := make(map[rune]int)
 		for _, ch := range line {
-			if count[ch] == 0 {
-				count[ch] = 1
+			if letterCounts[ch] == 0 {
+				letterCounts[ch] = 1
 			} else {
-				count[ch]++
+				letterCounts[ch]++
 			}
 		}
 
 		counted := make(map[int]struct{})
-		for _, v := range count {
+		for _, v := range letterCounts {
 			if _, ok := counted[v]; !ok {
 				counted[v] = struct{}{}
 				counts[v]++
