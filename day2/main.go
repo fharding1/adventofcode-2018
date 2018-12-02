@@ -35,7 +35,7 @@ func main() {
 		}
 	}
 
-	fmt.Println(counts[2] * counts[3])
+	fmt.Println("checksum:", counts[2]*counts[3])
 
 A:
 	for _, a := range lines {
@@ -54,7 +54,7 @@ A:
 			}
 
 			if off != -1 {
-				fmt.Println(a[:off] + a[off+1:])
+				fmt.Println("common id:", a[:off]+a[off+1:])
 				break A
 			}
 		}
