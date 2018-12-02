@@ -43,8 +43,8 @@ A:
 		for _, b := range lines {
 			off := -1
 
-			for i, ch := range b {
-				if string(a[i]) != string(ch) {
+			for i := 0; i < len(b); i++ {
+				if a[i] != b[i] {
 					if off == -1 {
 						off = i
 					} else {
