@@ -20,16 +20,16 @@ func main() {
 	}
 
 	var sum int
-	history := map[int]struct{}{0: struct{}{}}
+	history := map[int]bool{0: true}
 
 	for i := 0; true; i++ {
 		sum += frequencies[i%len(frequencies)]
 
-		if _, ok := history[sum]; ok {
+		if history[sum] {
 			break
 		}
 
-		history[sum] = struct{}{}
+		history[sum] = true
 
 		if i == len(frequencies)-1 {
 			fmt.Println("first sum:", sum)

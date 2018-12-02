@@ -26,10 +26,10 @@ func main() {
 			}
 		}
 
-		counted := make(map[int]struct{})
+		counted := make(map[int]bool)
 		for _, v := range letterCounts {
-			if _, ok := counted[v]; !ok {
-				counted[v] = struct{}{}
+			if !counted[v] {
+				counted[v] = true
 				counts[v]++
 			}
 		}
