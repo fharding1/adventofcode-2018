@@ -10,7 +10,7 @@ import (
 
 const inputFileName = "input.txt"
 
-type Claim struct {
+type claim struct {
 	ID         int
 	OffsetLeft int
 	OffsetTop  int
@@ -58,25 +58,40 @@ ClaimsLoop:
 	}
 }
 
-func parseFile(name string) ([]Claim, error) {
+func parseFile(name string) ([]claim, error) {
 	input, err := ioutil.ReadFile(name)
 
 	lines := strings.Split(string(input), "\n")
 	regex := regexp.MustCompile(`#(\d+) @ (\d+),(\d+): (\d+)x(\d+)`)
 
-	var claims []Claim
+	var claims []claim
 	for _, line := range lines {
 		if line == "" {
 			continue
 		}
 
 		matches := regex.FindAllStringSubmatch(line, -1)
-		id, _ := strconv.Atoi(matches[0][1])
-		ol, _ := strconv.Atoi(matches[0][2])
-		ot, _ := strconv.Atoi(matches[0][3])
-		w, _ := strconv.Atoi(matches[0][4])
-		h, _ := strconv.Atoi(matches[0][5])
-		c := Claim{id, ol, ot, w, h}
+		id, err := strconv.Atoi(matches[0][1])
+		if err != nil {
+			return nil, err
+		}
+		ol, err := strconv.Atoi(matches[0][2])
+		if err != nil {
+			return nil, err
+		}
+		ot, err := strconv.Atoi(matches[0][3])
+		if err != nil {
+			return nil, err
+		}
+		w, err := strconv.Atoi(matches[0][4])
+		if err != nil {
+			return nil, err
+		}
+		h, err := strconv.Atoi(matches[0][5])
+		if err != nil {
+			return nil, err
+		}
+		c := claim{id, ol, ot, w, h}
 		claims = append(claims, c)
 	}
 
