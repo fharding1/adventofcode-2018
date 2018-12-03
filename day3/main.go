@@ -24,19 +24,19 @@ func main() {
 		panic(err)
 	}
 
-	var fabric [1000][1000][]int
+	var fabric [1000][1000]int
 	for _, c := range claims {
 		for i := c.OffsetLeft; i < c.OffsetLeft+c.Width; i++ {
 			for j := c.OffsetTop; j < c.OffsetTop+c.Height; j++ {
-				fabric[i][j] = append(fabric[i][j], c.ID)
+				fabric[i][j]++
 			}
 		}
 	}
 
 	var count int
 	for _, col := range fabric {
-		for _, cell := range col {
-			if len(cell) >= 2 {
+		for _, overlaps := range col {
+			if overlaps >= 2 {
 				count++
 			}
 		}
@@ -48,7 +48,7 @@ ClaimsLoop:
 	for _, c := range claims {
 		for i := c.OffsetLeft; i < c.OffsetLeft+c.Width; i++ {
 			for j := c.OffsetTop; j < c.OffsetTop+c.Height; j++ {
-				if len(fabric[i][j]) > 1 {
+				if fabric[i][j] > 1 {
 					continue ClaimsLoop
 				}
 			}
