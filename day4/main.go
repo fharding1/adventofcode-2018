@@ -69,8 +69,7 @@ func main() {
 		case "falls":
 			slept = log.time
 		case "wakes":
-			woke := log.time // #wokeaf
-			for i := slept; i.Unix() < woke.Unix(); i = i.Add(time.Minute) {
+			for i := slept; i.Unix() < log.time.Unix(); i = i.Add(time.Minute) {
 				minutes := guardSleepMinutes[guardID]
 				minutes[i.Minute()]++
 				guardSleepMinutes[guardID] = minutes
