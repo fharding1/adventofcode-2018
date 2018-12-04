@@ -25,19 +25,16 @@ func main() {
 	}
 
 	var fabric [1000][1000]int
+	var count int
+
 	for _, c := range claims {
 		for i := c.OffsetLeft; i < c.OffsetLeft+c.Width; i++ {
 			for j := c.OffsetTop; j < c.OffsetTop+c.Height; j++ {
 				fabric[i][j]++
-			}
-		}
-	}
 
-	var count int
-	for _, col := range fabric {
-		for _, overlaps := range col {
-			if overlaps >= 2 {
-				count++
+				if fabric[i][j] == 2 {
+					count++
+				}
 			}
 		}
 	}
