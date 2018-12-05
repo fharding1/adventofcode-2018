@@ -5,10 +5,16 @@ import (
 	"fmt"
 	"hash/crc32"
 	"io/ioutil"
-	"strings"
+	"unicode"
 )
 
 const alphabet = "abcdefghijklmnopqrstuvwxyz"
+
+// This is 10x faster than strings.ToLower or bytes.ToLower. Shortened the
+// execution time from 6s to 600ms :exploding_head:.
+func toLower(ch byte) byte {
+	return byte(unicode.ToLower(rune(ch)))
+}
 
 func react(polymer []byte) []byte {
 	changed := true
@@ -22,7 +28,7 @@ func react(polymer []byte) []byte {
 			if i-1 >= 0 {
 				prev := polymer[i-1]
 
-				if prev != cur && strings.ToLower(string(prev)) == strings.ToLower(string(cur)) {
+				if prev != cur && toLower(prev) == toLower(cur) {
 					polymer = append(polymer[:i-1], polymer[i+1:]...)
 					break
 				}
@@ -31,7 +37,7 @@ func react(polymer []byte) []byte {
 			if i+1 < len(polymer) {
 				next := polymer[i+1]
 
-				if next != cur && strings.ToLower(string(next)) == strings.ToLower(string(cur)) {
+				if next != cur && toLower(next) == toLower(cur) {
 					polymer = append(polymer[:i], polymer[i+2:]...)
 					break
 				}
