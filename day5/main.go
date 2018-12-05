@@ -50,7 +50,11 @@ func react(polymer []byte) []byte {
 }
 
 func main() {
-	polymer, _ := ioutil.ReadFile("input.txt")
+	polymer, err := ioutil.ReadFile("input.txt")
+	if err != nil {
+		panic(err)
+	}
+
 	polymer = bytes.Trim(polymer, "\n")
 
 	polymer = react(polymer)
