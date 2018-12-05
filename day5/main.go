@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"fmt"
-	"hash/crc32"
 	"io/ioutil"
 	"unicode"
 )
@@ -20,9 +19,9 @@ func react(polymer []byte) []byte {
 	changed := true
 
 	for changed {
-		oldChecksum := crc32.Checksum(polymer, crc32.IEEETable)
-
 		for i := range polymer {
+			changed = false
+
 			cur := polymer[i]
 
 			if i-1 >= 0 {
@@ -30,6 +29,7 @@ func react(polymer []byte) []byte {
 
 				if prev != cur && toLower(prev) == toLower(cur) {
 					polymer = append(polymer[:i-1], polymer[i+1:]...)
+					changed = true
 					break
 				}
 			}
@@ -39,13 +39,10 @@ func react(polymer []byte) []byte {
 
 				if next != cur && toLower(next) == toLower(cur) {
 					polymer = append(polymer[:i], polymer[i+2:]...)
+					changed = true
 					break
 				}
 			}
-		}
-
-		if oldChecksum == crc32.Checksum(polymer, crc32.IEEETable) {
-			changed = false
 		}
 	}
 
