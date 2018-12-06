@@ -16,32 +16,26 @@ func toLower(ch byte) byte {
 }
 
 func react(polymer []byte) []byte {
-	changed := true
+	for i := 0; i < len(polymer); i++ {
+		cur := polymer[i]
 
-	for changed {
-		for i := range polymer {
-			changed = false
+		if i-1 >= 0 {
+			prev := polymer[i-1]
 
-			cur := polymer[i]
-
-			if i-1 >= 0 {
-				prev := polymer[i-1]
-
-				if prev != cur && toLower(prev) == toLower(cur) {
-					polymer = append(polymer[:i-1], polymer[i+1:]...)
-					changed = true
-					break
-				}
+			if prev != cur && toLower(prev) == toLower(cur) {
+				polymer = append(polymer[:i-1], polymer[i+1:]...)
+				i -= 2
+				continue
 			}
+		}
 
-			if i+1 < len(polymer) {
-				next := polymer[i+1]
+		if i+1 < len(polymer) {
+			next := polymer[i+1]
 
-				if next != cur && toLower(next) == toLower(cur) {
-					polymer = append(polymer[:i], polymer[i+2:]...)
-					changed = true
-					break
-				}
+			if next != cur && toLower(next) == toLower(cur) {
+				polymer = append(polymer[:i], polymer[i+2:]...)
+				i--
+				continue
 			}
 		}
 	}
