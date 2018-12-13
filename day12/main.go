@@ -1,25 +1,28 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io/ioutil"
+	"os"
 	"strings"
 )
 
 func main() {
-	f, _ := ioutil.ReadFile("input.txt")
-	lines := strings.Split(string(f), "\n")
+	f, _ := os.Open("input.txt")
+	scanner := bufio.NewScanner(f)
 
 	curGeneration := make(map[int]bool)
-	for i, v := range strings.TrimPrefix(lines[0], "initial state: ") {
+
+	scanner.Scan()
+	for i, v := range strings.TrimPrefix(scanner.Text(), "initial state: ") {
 		curGeneration[i] = v == '#'
 	}
+	scanner.Scan()
 
 	rules := make(map[string]bool)
-	for _, rule := range lines[1:] {
-		if rule != "" {
-			rules[rule[:5]] = rule[9:10][0] == '#'
-		}
+	for scanner.Scan() {
+		rule := scanner.Text()
+		rules[rule[:5]] = rule[9:10][0] == '#'
 	}
 
 	var minIdx, maxIdx = 0, len(curGeneration) - 1
